@@ -520,7 +520,7 @@ sub runCutadapt($$$$$$$$$;$$) {
 
     $cutadaptArguments .= sprintf(" --quality-cutoff %d --quality-base %d", $qualityCutoff, $qualityEncodingBase);
 
-    foreach my $contaminantName (keys $detectedContaminantNamesRef) {
+    foreach my $contaminantName (keys %$detectedContaminantNamesRef) {
         die if (!defined $contaminantSequencesRef->{$contaminantName});
         my $sequence = $contaminantSequencesRef->{$contaminantName};
 
@@ -531,7 +531,7 @@ sub runCutadapt($$$$$$$$$;$$) {
         $cutadaptArguments .= " --anywhere=$reverseComplement";
     }
 
-    if (int(keys $detectedContaminantNamesRef) == 0) {
+    if (int(keys %$detectedContaminantNamesRef) == 0) {
         # cutadapt expects there to be at least one adaptor to cut,
         # but we might be filtering on quality or length instead
         # need to supply a dummy adaptor
